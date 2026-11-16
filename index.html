@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>梅李智谷 · 园区实景</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #b9cfe2; font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif; color: #1c2126; -webkit-font-smoothing: antialiased; }
+  canvas#view { position: fixed; inset: 0; width: 100%; height: 100%; display: block; outline: none; cursor: grab; }
+  canvas#view.dragging { cursor: grabbing; }
+  .panel { background: rgba(250, 250, 248, 0.82); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 6px 24px rgba(15, 25, 40, 0.16); border-radius: 12px; }
+  #title { position: fixed; left: 20px; top: 18px; padding: 12px 16px; pointer-events: none; }
+  #title h1 { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: 0.04em; }
+  #title p { margin: 4px 0 0; font-size: 12px; color: #5b646d; font-variant-numeric: tabular-nums; }
+  #bar { position: fixed; right: 20px; top: 18px; display: flex; gap: 10px; align-items: center; }
+  .seg { display: flex; padding: 4px; gap: 2px; }
+  .seg button, #bar > button { font: inherit; font-size: 13px; border: 0; background: transparent; color: #39424b; padding: 7px 14px; border-radius: 8px; cursor: pointer; }
+  #bar > button { padding: 11px 14px; }
+  .seg button:hover, #bar > button:hover { background: rgba(0, 0, 0, 0.06); }
+  .seg button.on { background: #1f2a35; color: #fff; }
+  #bar > button.on { color: #c85a17; }
+  #hint { position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); padding: 8px 14px; font-size: 12px; color: #4a535c; white-space: nowrap; pointer-events: none; }
+  #labels { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+  .lb { position: absolute; left: 0; top: 0; transform: translate(-50%, -100%); padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; color: #fff; background: rgba(28, 36, 46, 0.78); border: 1px solid rgba(255, 255, 255, 0.35); pointer-events: auto; cursor: pointer; white-space: nowrap; will-change: transform; }
+  .lb::after { content: ""; position: absolute; left: 50%; top: 100%; width: 1px; height: 14px; background: rgba(255, 255, 255, 0.7); }
+  .lb.on { background: #e2702a; }
+  #card { position: fixed; left: 20px; bottom: 20px; width: 280px; padding: 16px 18px; display: none; }
+  #card h2 { margin: 0; font-size: 20px; font-weight: 600; }
+  #card .use { margin: 4px 0 12px; font-size: 13px; color: #c85a17; }
+  #card dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 13px; }
+  #card dt { color: #6a737c; } #card dd { margin: 0; }
+  #card .x { position: absolute; right: 10px; top: 8px; border: 0; background: none; font-size: 18px; color: #7a838c; cursor: pointer; }
+  #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; background: #dfe8f0; font-size: 14px; color: #4a535c; letter-spacing: 0.1em; transition: opacity 0.6s; }
+  @media (max-width: 720px) { #hint { display: none; } #title p { display: none; } }
+</style>
+</head>
+<body>
+<canvas id="view" tabindex="0"></canvas>
+<div id="labels"></div>
+<div id="title" class="panel"><h1>梅李智谷 · 园区实景</h1><p id="clock"></p></div>
+<div id="bar">
+  <div class="seg panel" id="mode"><button data-m="orbit" class="on">鸟瞰</button><button data-m="walk">漫游</button></div>
+  <button class="panel on" id="btnLabel">楼号</button>
+  <button class="panel" id="btnHome">全景</button>
+</div>
+<div id="card" class="panel"><button class="x" aria-label="关闭">×</button><h2></h2><div class="use"></div><dl></dl></div>
+<div id="hint" class="panel"></div>
+<div id="loading">正在生成园区…</div>
+<script src="lib/three.bundle.js"></script>
+<script src="js/data.js"></script>
+<script src="js/util.js"></script>
+<script src="js/textures.js"></script>
+<script src="js/env.js"></script>
+<script src="js/campus.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
